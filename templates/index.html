@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML4E-weather</title>
+    <link href="static/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> 
+
+    
+    <script>
+        async function getWeather() {
+            const city = document.getElementById("city").value;
+            const response = await fetch(`/weather?city=${city}`);
+            const data = await response.json();
+            
+            if (response.status !== 200) {
+                document.getElementById("weather-city").innerHTML = `<p>Error: ${data.error}</p>`;
+                return;
+            }
+            
+
+            document.getElementById("weather-temp").innerHTML = `
+                <p>${data.temperature.celsius.toFixed(0)}°C</p>
+                
+            `;
+            document.getElementById("weather-feels").innerHTML = `
+                <p>Feels Like: ${data.feels_like.celsius.toFixed(0)}°C</p>
+                
+            `;
+            document.getElementById("weather-wind").innerHTML = `
+                <p>${data.wind_speed} m/s</p>
+                
+            `;
+            document.getElementById("weather-hum").innerHTML = `
+                <p>${data.humidity}%C</p>
+                
+            `;
+            document.getElementById("weather-rise").innerHTML = `
+                <p>${new Date(data.sunrise).toLocaleTimeString()}</p>
+                
+            `;
+            document.getElementById("weather-set").innerHTML = `
+                <p>${new Date(data.sunset).toLocaleTimeString()}</p>
+                
+            `;
+            
+            document.getElementById("weather-pres").innerHTML = `
+                <p>${data.pressure}hPa</p>
+                
+            `;
+            document.getElementById("weather-des").innerHTML = `
+                <p>${data.description}</p>
+                
+            `;
+            document.getElementById("weather-city").innerHTML = `
+                <p>${document.getElementById("city").value}</p>
+                
+            `;
+            const description = data.description.toLowerCase();
+            let imagePath = '';
+            if (description.includes('clear')) {
+                imagePath = 'static/clear-1@2x.png';
+            } else if (description.includes('cloud')) {
+                imagePath = 'static/clouds-1@2x.png';
+            } else if (description.includes('rain')) {
+                imagePath = 'static/rain-1@2x.png';
+            } else if (description.includes('mist')) {
+                imagePath = 'static/mist-1@2x.png';
+            } else {
+                imagePath = 'static/clear-1@2x.png';  // Add a default image for any other conditions
+            }
+            document.getElementById("weather-img").src = imagePath;
+            
+        }
+    </script>
+
+</head>
+<body>
+    
+    <div class="whole">
+        <div class="header">
+            <input class="theme-toggle" type='checkbox'>
+            <div class="search">
+                <img src="static/search-11.png" alt="" style="height: 30px;margin:25px;">
+                <input type="text" id="city" placeholder="" class="searchBox">
+                <button onclick="getWeather()" style="border-radius:20px; background-color:white;border: none;">Get Weather</button>
+            </div>
+        </div>
+    
+    
+        <div class="weather">
+
+            <!-- 1st part -->
+            <div class="info">
+                <div class="city" id="weather-city">Titilagarh</div>
+                <span class="time">07:43</span>
+                <span class="date">Friday, 27 Jul</span>
+            </div>
+
+            <!-- 2nd part -->
+            <div class="detail">
+                <div class="main">
+                    <div class="temp" style="display: flex;flex-direction: column;align-items: center;height: 50%;">
+                        <div class="gray" id="weather-temp" style="font-size: 80px;margin: 0px;">32°C</div>
+                        <div class="city" id="weather-feels" style="margin: 0px;">Feels like: 22°C</div>
+                    </div>
+                    <div class="sun" style="display: flex;align-items: center;flex-direction: column; height: 60%;margin-left: 20px;">
+                        <div class="sunrise" style="display: flex;">
+                            <div>
+                                <img src="static/sunrisewhite-1@2x.png" alt="" style="height: 50%;margin-right: 15px;">
+                            </div>
+                            <div style="display: flex;flex-direction: column;">
+                                <span class="city" style="margin: 0px;">Sunrise</span>
+                                <div class="gray" id="weather-rise" style="margin: 0px;">06:37 AM</div>
+                            </div>
+                        </div>
+                        <div class="sunset" style="display: flex;">
+                            <div>
+                                <img src="static/sunsetwhite-1@2x.png" alt="" style="height: 50%;margin-right: 15px;">
+                            </div>
+                            <div style="display: flex;flex-direction: column;">
+                                <span class="city" style="margin: 0px;">Sunset</span>
+                                <div class="gray" id="weather-set" style="margin: 0px;">20:37 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image">
+                    <div class="imag" style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 100%;">
+                        <img id="weather-img" src="static/clear-1@2x.png" alt="" style="height: 60%;width: auto;">
+                        <div class="city" id="weather-des" style="margin: 0px; height: 30%;">Sunny</div>
+                    </div>
+                </div>
+                <div class="extra">
+                    <div class="up" style="display: flex; justify-content: space-around;align-items: center;height: 40%;">
+                        <div  style="display: flex;justify-content: center;align-items: center; flex-direction: column;height: 100%;width: 50%;">
+                            <img src="static/humidity-1@2x.png" alt="" style="height: 35%; width: auto; margin: 20px; margin-bottom: 0px;">
+                            <div class="city" id="weather-hum" style="font-size: 20px;margin: 6px;">41%</div>
+                            <span class="gray" style="font-size: 18px;margin: 0px;">Humidity</span>
+                        </div>
+                        <div  style="display: flex;justify-content: center;align-items: center; flex-direction: column;height: 100%;width: 50%;">
+                            <img src="static/wind-1@2x.png" alt="" style="height: 35%; width:auto; margin: 20px;margin-bottom: 0px;">
+                            <div class="city" id="weather-wind" style="font-size: 20px;margin: 6px;">2km/h</div>
+                            <span class="gray" style="font-size: 18px;margin: 0px;">Wind speed</span>
+                        </div>
+                    </div>
+                    <div class="down" style="display: flex; justify-content: space-around;align-items: center;height: 40%;">
+                        <div  style="display: flex;justify-content: center;align-items: center; flex-direction: column;height: 100%;width: 50%;">
+                            <img src="static/pressurewhite-1@2x.png" alt="" style="height: 35%; width:auto; margin: 80px;margin-bottom: 0px;">
+                            <div class="city" id="weather-pres" style="font-size: 20px;margin: 6px;">997hPa</div>
+                            <span class="gray" style="font-size: 18px;margin: 0px;">pressure</span>
+                        </div>
+                        <div style="display: flex;justify-content: center;align-items: center; flex-direction: column;height: 100%;width: 50%;">
+                            <img src="static/uvwhite-1@2x.png" alt="" style="height: 35%; width:auto; margin: 80px;margin-bottom: 0px;">
+                            <div class="city" style="font-size: 20px;margin: 6px;">8</div>
+                            <span class="gray" style="font-size: 18px;margin: 0px;">uv</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="news">
+
+            <!-- 3rd part -->
+            <div class="sumerize">
+                <header>
+                    <h1>News Summarization Dashboard</h1>
+                </header>
+                <main>
+                    <div id="news-container">
+                        <!-- News articles will be inserted here -->
+                        <div class="news-article">
+                            <h2>Breaking News: Major Event</h2>
+                            <p>A major event has occurred, impacting many people and causing significant changes.</p>
+                        </div>
+                        <div class="news-article">
+                            <h2>Technology Advances in 2024</h2>
+                            <p>New technological advancements are revolutionizing the industry, bringing new opportunities and challenges.</p>
+                        </div>
+                        <div class="news-article">
+                            <h2>Sports Update: Championship Results</h2>
+                            <p>The championship results are in, with thrilling performances and unexpected outcomes.</p>
+                        </div>
+                        
+                    </div>
+                </main>
+            </div>
+
+            <!-- 4th part -->
+            <div class="finance">
+                <header class="head">
+                    <h1>Finance Update Dashboard</h1>
+                </header>
+                <div class="dashboard">
+                    <section class="dashboard-section">
+                        <h2>Stock Prices</h2>
+                        <div class="card">
+                            <h3>Apple Inc. (AAPL)</h3>
+                            <p>Price: $145.09</p>
+                            <p>Change: <span class="positive">+1.24 (0.86%)</span></p>
+                        </div>
+                        <div class="card">
+                            <h3>Google LLC (GOOGL)</h3>
+                            <p>Price: $2729.30</p>
+                            <p>Change: <span class="negative">-12.56 (0.46%)</span></p>
+                        </div>
+                    </section>
+                    <section class="dashboard-section">
+                        <h2>Cryptocurrency</h2>
+                        <div class="card">
+                            <h3>Bitcoin (BTC)</h3>
+                            <p>Price: $39,000.00</p>
+                            <p>Change: <span class="positive">+500.00 (1.30%)</span></p>
+                        </div>
+                        <div class="card">
+                            <h3>Ethereum (ETH)</h3>
+                            <p>Price: $2,500.00</p>
+                            <p>Change: <span class="positive">+20.00 (0.80%)</span></p>
+                        </div>
+                    </section>
+                    
+                </div>
+            
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="head" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <span class="copyright" style="font-size: 25px; ">
+            By NITR (ML4E) Group 4
+        </span>
+    </div>
+
+
+    <script>
+        const checkbox = document.querySelector('input[type="checkbox"]');
+
+        checkbox.addEventListener("change", () => {
+	        document.body.classList.toggle("dark-body");
+        });
+
+    </script>
+    <script>
+        
+        fetch('http://127.0.0.1:5000/weather?city=bhubaneswar')
+        .then(res =>{
+            console.log(res);
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script>
+        async function getWeather() {
+            const city = document.getElementById("city").value;
+            const response = await fetch(`/weather?city=${city}`);
+            const data = await response.json();
+            
+            if (response.status !== 200) {
+                document.getElementById("weather-data").innerHTML = `<p>Error: ${data.error}</p>`;
+                return;
+            }
+
+            document.getElementById("weather-data").innerHTML = `
+                <p>Temperature: ${data.temperature.celsius.toFixed(2)}°C / ${data.temperature.fahrenheit.toFixed(2)}°F</p>
+                <p>Feels Like: ${data.feels_like.celsius.toFixed(2)}°C / ${data.feels_like.fahrenheit.toFixed(2)}°F</p>
+                <p>Wind Speed: ${data.wind_speed} m/s</p>
+                <p>Humidity: ${data.humidity}%</p>
+                <p>Description: ${data.description}</p>
+                <p>Sunrise: ${new Date(data.sunrise).toLocaleTimeString()}</p>
+                <p>Sunset: ${new Date(data.sunset).toLocaleTimeString()}</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <input type="text" id="city" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="weather-data"></div>
+</body>
+</html>
