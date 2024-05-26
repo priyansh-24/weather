@@ -1,9 +1,12 @@
+import os
 from flask import Flask, jsonify, request, render_template
 import requests
 import datetime as dt
 from newspaper import Article
 import nltk
 from yahoo_fin.stock_info import get_live_price
+
+nltk.data.path.append('./nltk_data')
 
 app = Flask(__name__)
 
@@ -15,9 +18,6 @@ WEATHER_API_KEY = "b69553333dafad4bd0d40cf76f4e7f8a"
 NEWS_API_KEY = '7061c854f0c44d8e8c355e5fe2681891'
 NEWS_BASE_URL = 'https://newsapi.org/v2'
 NEWS_ENDPOINT = '/top-headlines'
-
-nltk.download('punkt')
-
 
 def kelvin_to_celsius_fahrenheit(kelvin):
     celsius = kelvin - 273.15
