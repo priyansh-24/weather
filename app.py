@@ -5,7 +5,8 @@ import datetime as dt
 from newspaper import Article
 import nltk
 from yahoo_fin.stock_info import get_live_price
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 
 nltk.data.path.append('./nltk_data')
 
@@ -135,7 +136,8 @@ def get_news():
     
 @app.route('/datetime', methods=['GET'])
 def get_datetime():
-    now = datetime.now(timezone.utc)
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
     current_date = now.strftime("%d-%m-%Y")
     current_time = now.strftime("%I:%M")
     return jsonify({"current_date": current_date, "current_time": current_time})
