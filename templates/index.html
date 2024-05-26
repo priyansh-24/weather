@@ -115,6 +115,22 @@
                 });
         }
 
+        function fetchDateTime() {
+            fetch('/datetime')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('date').innerText = data.current_date;
+                    document.getElementById('time').innerText = data.current_time;
+                });
+        }
+        
+        
+        // Fetch date and time when the page loads
+        fetchDateTime();
+
+        // Refresh date and time every 1 seconds
+        setInterval(fetchDateTime, 1000);
+
         fetchFinance();
         fetchNews();
     </script>
@@ -138,8 +154,8 @@
             <!-- 1st part -->
             <div class="info">
                 <div class="city" id="weather-city">Titilagarh</div>
-                <span class="time">07:43</span>
-                <span class="date">Friday, 27 Jul</span>
+                <div class="time" id="time">07:43</div>
+                <div class="date" id="date">Friday, 27 Jul</div>
             </div>
 
             <!-- 2nd part -->

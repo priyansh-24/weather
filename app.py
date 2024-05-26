@@ -5,6 +5,7 @@ import datetime as dt
 from newspaper import Article
 import nltk
 from yahoo_fin.stock_info import get_live_price
+from datetime import datetime
 
 nltk.data.path.append('./nltk_data')
 
@@ -130,6 +131,14 @@ def get_news():
         return jsonify(article_summaries)
     else:
         return jsonify({'error': f"Failed to fetch data: {response.status_code}"}), response.status_code
+    
+    
+@app.route('/datetime', methods=['GET'])
+def get_datetime():
+    now = datetime.now()
+    current_date = now.strftime("%d-%m-%Y")
+    current_time = now.strftime("%I:%M")
+    return jsonify({"current_date": current_date, "current_time": current_time})
 
 
 if __name__ == '__main__':
