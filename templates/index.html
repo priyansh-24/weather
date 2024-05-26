@@ -73,6 +73,50 @@
             document.getElementById("weather-img").src = imagePath;
             
         }
+        function fetchFinance() {
+            fetch('/finance')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('finance-f').innerHTML = `
+                        <p>Price: $${data.facebook.current_price.toFixed(2)}</p>
+                    `;
+                    document.getElementById('finance-a').innerHTML = `
+                        <p>Price: $${data.apple.current_price.toFixed(2)}</p>
+                    `;
+                    document.getElementById('finance-m').innerHTML = `
+                        <p>Price: $${data.microsoft.current_price.toFixed(2)}</p>
+                    `;
+                    document.getElementById('finance-g').innerHTML = `
+                        <p>Price: $${data.google.current_price.toFixed(2)}</p>
+                    `;
+                });
+        }
+
+        function fetchNews() {
+            fetch('/news')
+                .then(response => response.json())
+                .then(data => {
+                    const newsList = data.map(article => `
+                        
+                        <div id="news-article" style="background-image:linear-gradient(to right ,rgb(242, 242, 242),rgb(155, 155, 155));
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s;
+                        hover:background-image:linear-gradient(to right ,rgb(248, 236, 205),rgb(179, 211, 243)) ;
+                        hover:transform: scale(1.05);
+                        ">
+                            <h3>${article.title}</h3>
+                            <p>${article.summary}</p>
+                            <a href="${article.url}" target="_blank">Read more</a>
+                        </div>
+                    `).join('');
+                    document.getElementById('news-container').innerHTML = newsList;
+                });
+        }
+
+        fetchFinance();
+        fetchNews();
     </script>
 
 </head>
@@ -165,6 +209,44 @@
         <div class="news">
 
             <!-- 3rd part -->
+    
+            <div class="finance">
+                <header class="head">
+                    <h1>Finance Update Dashboard</h1>
+                </header>
+                <div class="dashboard">
+                    <section class="dashboard-section">
+                        <h2>Stock Prices</h2>
+                        <div class="card">
+                            <h3>Facebook</h3>
+                            <div id="finance-f">Price: $145.09</div>
+                            <p>Change: <span class="positive">+1.24 (0.86%)</span></p>
+                        </div>
+                        <div class="card">
+                            <h3>Apple</h3>
+                            <div id="finance-a">Price: $2729.30</div>
+                            <p>Change: <span class="negative">-12.56 (0.46%)</span></p>
+                        </div>
+                    </section>
+                    <section class="dashboard-section">
+                        <div class="card">
+                            <h3>Microsoft</h3>
+                            <div id="finance-m">Price: $2729.30</div>
+                            <p>Change: <span class="negative">-12.56 (0.37%)</span></p>
+                        </div>
+                        <div class="card">
+                            <h3>Google</h3>
+                            <div id="finance-g">Price: $2729.30</div>
+                            <p>Change: <span class="positive">+1.24 (0.43%)</span></p>
+                        </div>
+                    </section>
+                    
+                </div>
+            
+                
+            </div>
+
+            <!-- 4th part -->
             <div class="sumerize">
                 <header>
                     <h1>News Summarization Dashboard</h1>
@@ -184,47 +266,20 @@
                             <h2>Sports Update: Championship Results</h2>
                             <p>The championship results are in, with thrilling performances and unexpected outcomes.</p>
                         </div>
-                        
+                        <div class="news-article">
+                            <h2>Breaking News: Major Event</h2>
+                            <p>A major event has occurred, impacting many people and causing significant changes.</p>
+                        </div>
+                        <div class="news-article">
+                            <h2>Technology Advances in 2024</h2>
+                            <p>New technological advancements are revolutionizing the industry, bringing new opportunities and challenges.</p>
+                        </div>
+                        <div class="news-article">
+                            <h2>Sports Update: Championship Results</h2>
+                            <p>The championship results are in, with thrilling performances and unexpected outcomes.</p>
+                        </div>
                     </div>
                 </main>
-            </div>
-
-            <!-- 4th part -->
-            <div class="finance">
-                <header class="head">
-                    <h1>Finance Update Dashboard</h1>
-                </header>
-                <div class="dashboard">
-                    <section class="dashboard-section">
-                        <h2>Stock Prices</h2>
-                        <div class="card">
-                            <h3>Apple Inc. (AAPL)</h3>
-                            <p>Price: $145.09</p>
-                            <p>Change: <span class="positive">+1.24 (0.86%)</span></p>
-                        </div>
-                        <div class="card">
-                            <h3>Google LLC (GOOGL)</h3>
-                            <p>Price: $2729.30</p>
-                            <p>Change: <span class="negative">-12.56 (0.46%)</span></p>
-                        </div>
-                    </section>
-                    <section class="dashboard-section">
-                        <h2>Cryptocurrency</h2>
-                        <div class="card">
-                            <h3>Bitcoin (BTC)</h3>
-                            <p>Price: $39,000.00</p>
-                            <p>Change: <span class="positive">+500.00 (1.30%)</span></p>
-                        </div>
-                        <div class="card">
-                            <h3>Ethereum (ETH)</h3>
-                            <p>Price: $2,500.00</p>
-                            <p>Change: <span class="positive">+20.00 (0.80%)</span></p>
-                        </div>
-                    </section>
-                    
-                </div>
-            
-                
             </div>
         </div>
     </div>
