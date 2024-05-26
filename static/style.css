@@ -225,15 +225,17 @@
 
 /**3rd section**/
 .sumerize{
-    padding: 10px;
+  padding: 10px;
     margin: 4%;
+    margin-left:0%;
     background-image: none;
     background-color:rgb(45, 47, 43);
     height: 90%;
-    width: 30%;
+    width: 55%;
     border-radius:30px;
     overflow-y: scroll;
     overflow-x: hidden;
+    
 }
 
 body {
@@ -334,14 +336,16 @@ body {
 /**4th section**/
 
 .finance{
-    padding: 10px;
-    margin: 4%;
-    margin-left:0%;
-    background-image: none;
-    background-color: rgb(45, 47, 43);
-    height: 90%;
-    width: 55%;
-    border-radius:30px;
+    
+  padding: 10px;
+  margin: 4%;
+  background-image: none;
+  background-color:rgb(45, 47, 43);
+  height: 90%;
+  width: 30%;
+  border-radius:30px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 header {
@@ -370,7 +374,7 @@ main {
 
 #news-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 20px;
 }
 
@@ -425,11 +429,7 @@ main {
       overflow-x: hidden;
     }
 
-    .sumerize{
-      overflow-x: hidden;
-      overflow-y: hidden;
-
-    }
+    
 
     .news{
         flex-direction: column;
