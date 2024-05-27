@@ -42,6 +42,7 @@ def get_weather():
         return jsonify({"error": response.get('message', 'Failed to retrieve data')}), response.get('cod', 500)
 
     try:
+        visibility=response['visibility']
         pressure = response['main']['pressure']
         temp_kelvin = response['main']['temp']
         temp_celsius, temp_fahrenheit = kelvin_to_celsius_fahrenheit(temp_kelvin)
@@ -54,6 +55,7 @@ def get_weather():
         sunrise_time = dt.datetime.utcfromtimestamp(response['sys']['sunrise'] + timezone_offset)
         sunset_time = dt.datetime.utcfromtimestamp(response['sys']['sunset'] + timezone_offset)
 
+
         weather_data = {
             "temperature": {
                 "celsius": temp_celsius,
@@ -63,6 +65,7 @@ def get_weather():
                 "celsius": feels_like_celsius,
                 "fahrenheit": feels_like_fahrenheit
             },
+            "visibility":visibility/1000,
             "wind_speed": wind_speed,
             "humidity": humidity,
             "pressure": pressure,
